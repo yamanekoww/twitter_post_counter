@@ -57,7 +57,7 @@ if(array_key_exists("errors", $result)){
 	$user_name = $result->user->name;
 	$tweet_id = $result->id;
 	$tweet_url = "https://twitter.com/" . $user_name . "/status/" . $tweet_id;
-	$display_html = "ツイートが投稿されました<br>ご協力ありがとうございます。 <a href='". $tweet_url ."'>Twitterで確認</a>";
+	$display_html = "ツイートが投稿されました<br>ご協力ありがとうございます。 <a href='". $tweet_url ."' target='_blank'>Twitterで確認</a>";
 
 
 

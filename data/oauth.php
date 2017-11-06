@@ -19,9 +19,9 @@ $request_token = $connection->oauth('oauth/request_token', array('oauth_callback
 $_SESSION['oauth_token'] = $request_token['oauth_token'];
 $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
 
-echo "<pre>";
-print_r($request_token);
-echo "</pre>";
+// echo "<pre>";
+// print_r($request_token);
+// echo "</pre>";
 
 //Twitter.com 上の認証画面のURLを取得( この行についてはコメント欄も参照 )
 $url = $connection->url('oauth/authenticate', array('oauth_token' => $request_token['oauth_token']));

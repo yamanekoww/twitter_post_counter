@@ -1,3 +1,48 @@
+<?php
+// ini_set("display_errors", On);
+// error_reporting(E_ALL);
+
+session_start();
+
+require_once 'common/config.php';
+require_once 'lib/twitteroauth/autoload.php';
+
+use Abraham\TwitterOAuth\TwitterOAuth;
+
+
+$user_icon_html = "";
+$twitter_profile_image_url_https = "";
+
+
+
+//アクセストークンを取得済みの場合は設定,ない場合は認証画面へ遷移
+if(isset($_SESSION['access_token'])){
+	$access_token = $_SESSION['access_token'];
+	$twitter_user_id = $_SESSION['user_id'];
+	$twitter_screen_name = $_SESSION['screen_name'];
+
+	//OAuthトークンとシークレットも使って TwitterOAuth をインスタンス化
+	$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
+
+}else{
+	oauth();
+}
+
+
+//ユーザーアイコンを取得 + アクセストークンの生存確認 ない場合は認証画面へ遷移
+$result = $connection->get('users/show',array("user_id" => $twitter_user_id));
+if(!array_key_exists("errors", $result)){
+	$twitter_profile_image_url_https = $result->profile_image_url_https;
+	$user_icon_html = '<a href="https://twitter.com/"><img src="' . $twitter_profile_image_url_https . '"></a>';
+
+}else{
+	oauth();
+}
+
+function oauth(){
+	header( 'location: oauth.php' );
+}
+?>
 <!DOCTYPE html>
 <!--[if IE 8]><html class="lt-ie10 lt-ie9"><![endif]-->
 <!--[if IE 9]><html class="lt-ie10"> <![endif]-->
@@ -45,13 +90,14 @@
 	<div id="l-wrap">
 		<!-- [ GLOBAL HEADER ] -->
 		<div id="l-header">
-ヘッダー
+ヘッダー<br>
+<?php echo $user_icon_html; ?>
 		</div>
 		<!-- [ /GLOBAL HEADER ] -->
 
 		<!-- [ CONTENT ] -->
 		<div id="l-content">
-			<form action="thanks.php" method="post">
+			<form action="send.php" method="post">
 				<textarea name="tweet">#デフォルトハッシュタグ その他テキスト</textarea>
 				<button>ツイートする</button>
 			</form>
