@@ -4,8 +4,8 @@
 
 session_start();
 
-require_once 'common/config.php';
-require_once 'lib/twitteroauth/autoload.php';
+require_once 'prg/config.php';
+require_once 'prg/lib/twitteroauth/autoload.php';
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 

@@ -4,8 +4,8 @@
 
 session_start();
 
-require_once 'common/config.php';
-require_once 'lib/twitteroauth/autoload.php';
+require_once 'prg/config.php';
+require_once 'prg/lib/twitteroauth/autoload.php';
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
@@ -62,7 +62,7 @@ if(array_key_exists("errors", $result)){
 
 
 	// auto increment //
-	$filename = "count.txt";
+	$filename = "prg/count.txt";
 	$num = @file_get_contents($filename);
 
 	$file = fopen($filename, "w");
